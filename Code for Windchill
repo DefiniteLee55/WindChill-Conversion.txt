@@ -1,0 +1,73 @@
+//Lee Stanziale
+
+#include <iostream>
+#include <cctype>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+//Function Identifiers.
+double ctof (double celsius);
+double ftoc (double fahrenheit);
+double windchill (double Wc_temp, double Wc_windSpeed);
+
+int main() {
+  double wind_speed;
+  double newc;
+  double wind_chill_calc, current_temp, current_temp_f;
+  char scale;
+  cout << fixed << showpoint;
+  cout << setprecision(1) ;
+  cout << "Enter temperature: "" ";
+  cin >> current_temp;
+  cout << "Enter scale (f or c): "" ";
+  cin >> scale;
+  
+  cout << "Enter the Wind speed:""  ";
+  cin >> wind_speed;
+
+  
+//To determine whether F or C gets ran in the program.  We need this so the program can distinguish and know which function to execute. If user enters C we want Celsius, if user wants F we want Fahrenheit to run. 
+ 
+ if(scale == 'f') {
+     
+      wind_chill_calc = windchill(current_temp, wind_speed);
+  } else {
+    
+     //Conversion
+      current_temp_f = ctof(current_temp);   
+      wind_chill_calc = windchill(current_temp_f, wind_speed);
+      wind_chill_calc = ftoc(wind_chill_calc);
+  
+      
+  }
+  //Displaying windchill converted back.
+  cout << "Wind chill factor is " << wind_chill_calc << (Char)toupper(scale) << ".";
+  
+  return 0;
+}
+//Fahrenheit to Celsius conversion
+double ctof(double celsius) {
+  double F;
+  F = celsius * (9.00 / 5.00) + 32.00;
+  return F;
+}
+//Celsius to Fahrenheit conversion
+double ftoc(double fahrenheit) {
+  double C;
+  C = (5.00 / 9.00) * (fahrenheit - 32.00);
+  return C;
+}
+//Windchill Formula
+double windchill(double Wc_temp, double Wc_windSpeed) {
+  double x;
+  double wind_chill_calc;
+  x = pow(Wc_windSpeed, 0.16);
+   wind_chill_calc = 35.74 + 0.6215*Wc_temp - 35.75*x + 0.4275*x*Wc_temp;
+
+  
+
+  return wind_chill_calc; 
+ 
+
+}
